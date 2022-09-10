@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "i18n": "ngx-translate-extract --input ./src --output ./src/i18n/en.json --output ./src/i18n/de.json --clean --key-as-default-value --format json"
   },
   "private": true,
   "dependencies": {
@@ -34,6 +35,7 @@
     "@angular-eslint/template-parser": "14.0.4",
     "@angular/cli": "~14.2.1",
     "@angular/compiler-cli": "^14.0.0",
+    "@bartholomej/ngx-translate-extract": "^8.0.2",
     "@types/jasmine": "~4.0.0",
     "@types/node": "^18.7.16",
     "@typescript-eslint/eslint-plugin": "5.36.2",
