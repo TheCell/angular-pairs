@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+$baseColor: #e6e8e1;
+$secondaryColor: #c7d888;
+$fontColor: #38443c;
+$accentColor: #fd5a32;
+
+:root {
+  --baseColor: #{$baseColor};
+  --secondaryColor: #{$secondaryColor};
+  --fontColor: #{$fontColor};
+  --accentColor: #{$accentColor};
+
+  --bs-body-color: #{$fontColor};
+  --bs-body-bg: #{$baseColor};
+}
+
+// .secondary {
+//   background-color: $secondaryColor;
+// }
+
+// html {
+//   background-color: $baseColor;
+//   color: $fontColor;
+// }

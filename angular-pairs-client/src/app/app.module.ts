@@ -7,12 +7,13 @@ import { AppComponent } from './app.component';
 import { GameScreenComponent } from './game-screen/game-screen.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ConstantsService } from './core/constants.service';
-// import { registerLocaleData } from '@angular/common';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GameScreenComponent
+    GameScreenComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -23,11 +24,10 @@ import { ConstantsService } from './core/constants.service';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-
   public constructor(
     private constantsService: ConstantsService,
     private translateService: TranslateService) {
-    this.initTranslateService();
+      this.initTranslateService();
   }
 
   private initTranslateService() {
@@ -49,7 +49,6 @@ export class AppModule {
     this.translateService.setDefaultLang(language);
     this.translateService.use('language');
 
-    // registerLocaleData()
     for (const lang of this.constantsService.languages) {
       this.translateService.setTranslation(lang, require(`../i18n/${lang}.json`));
     }

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { LayoutType } from './core/layout-type';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public title = 'angular-pairs-client';
+  public activeLayout: LayoutType = LayoutType.fullscreen;
+  public layoutType = LayoutType;
+
+  public constructor(activatedRoute: ActivatedRoute) {
+    activatedRoute.params.subscribe((params) => {
+      console.log(params);
+    })
+  }
+
 }

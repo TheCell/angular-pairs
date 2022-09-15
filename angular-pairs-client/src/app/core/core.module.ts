@@ -2,11 +2,18 @@ import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LayoutComponent } from './layout/layout.component';
+import { HeaderComponent } from './header/header.component';
+import { FullscreenLayoutComponent } from './fullscreen-layout/fullscreen-layout.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    LayoutComponent,
+    HeaderComponent,
+    FullscreenLayoutComponent
+  ],
   imports: [
     CommonModule,
     TranslateModule,
@@ -14,7 +21,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   ],
   exports: [
     TranslateModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    LayoutComponent,
+    FullscreenLayoutComponent
   ]
 })
 export class CoreModule {
