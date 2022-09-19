@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { LayoutType } from './core/layout-type';
 
 @Component({
@@ -11,9 +12,14 @@ export class AppComponent {
   public activeLayout: LayoutType = LayoutType.fullscreen;
   public layoutType = LayoutType;
 
-  public constructor(activatedRoute: ActivatedRoute) {
-    activatedRoute.params.subscribe((params) => {
-      console.log(params);
+  public constructor(router: Router) {
+    router.events.pipe(filter((navigationEvent) => navigationEvent instanceof NavigationEnd)).subscribe((evt) => {
+      const navigationEnd = evt as NavigationEnd;
+      if (navigationEnd.url.startsWith('/about')) {
+        this.activeLayout = LayoutType.fullscreen;
+      } else {
+        this.activeLayout = LayoutType.default;
+      }
     })
   }
 
