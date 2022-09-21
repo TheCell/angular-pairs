@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
   declarations: [
     LayoutComponent,
     HeaderComponent,
+    LayoutComponent,
     FullscreenLayoutComponent
   ],
   imports: [
