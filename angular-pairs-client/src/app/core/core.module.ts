@@ -5,6 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LayoutComponent } from './layout/layout.component';
 import { HeaderComponent } from './header/header.component';
 import { FullscreenLayoutComponent } from './fullscreen-layout/fullscreen-layout.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -17,7 +18,8 @@ import { FullscreenLayoutComponent } from './fullscreen-layout/fullscreen-layout
   imports: [
     CommonModule,
     TranslateModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    RouterModule
   ],
   exports: [
     TranslateModule,
