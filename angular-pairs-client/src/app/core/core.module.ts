@@ -6,6 +6,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { HeaderComponent } from './header/header.component';
 import { FullscreenLayoutComponent } from './fullscreen-layout/fullscreen-layout.component';
 import { RouterModule } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 
@@ -14,7 +15,8 @@ import { RouterModule } from '@angular/router';
     LayoutComponent,
     HeaderComponent,
     LayoutComponent,
-    FullscreenLayoutComponent
+    FullscreenLayoutComponent,
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,
