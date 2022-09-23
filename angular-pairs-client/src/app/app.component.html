@@ -1,21 +1,10 @@
 <container-element [ngSwitch]="activeLayout">
   <app-fullscreen-layout *ngSwitchCase="layoutType.fullscreen">
-    fullscreen
     <router-outlet></router-outlet>
   </app-fullscreen-layout>
 
   <app-layout *ngSwitchDefault>
-    default
     <router-outlet></router-outlet>
   </app-layout>
 
 </container-element>
-
-<!-- <app-layout>
-  <router-outlet></router-outlet>
-</app-layout> -->
-
-<!-- app component
-<app-fullscreen-layout>
-  <router-outlet></router-outlet>
-</app-fullscreen-layout> -->

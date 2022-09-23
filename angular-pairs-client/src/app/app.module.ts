@@ -8,12 +8,14 @@ import { GameScreenComponent } from './game-screen/game-screen.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ConstantsService } from './core/constants.service';
 import { AboutComponent } from './about/about.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameScreenComponent,
-    AboutComponent
+    AboutComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
