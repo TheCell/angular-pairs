@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { NavigationRoute } from './shared/services/navigation-route';
+import { NavigationService } from './shared/services/navigation.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LayoutType } from './core/layout-type';
 
 @Component({
@@ -8,19 +9,27 @@ import { LayoutType } from './core/layout-type';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  public activeLayout: LayoutType = LayoutType.fullscreen;
+export class AppComponent implements OnInit, OnDestroy {
+  public activeLayout: LayoutType = LayoutType.default;
   public layoutType = LayoutType;
 
-  public constructor(router: Router) {
-    router.events.pipe(filter((navigationEvent) => navigationEvent instanceof NavigationEnd)).subscribe((evt) => {
-      const navigationEnd = evt as NavigationEnd;
-      if (navigationEnd.url.startsWith('/about')) {
-        this.activeLayout = LayoutType.fullscreen;
-      } else {
-        this.activeLayout = LayoutType.default;
+  private subscription = new Subscription();
+
+  public constructor(private navigationService: NavigationService) { }
+
+  public ngOnInit(): void {
+    this.subscription.add(this.navigationService.currentRoute.subscribe((navigationRoute: NavigationRoute) => {
+      switch (navigationRoute) {
+        case NavigationRoute.about:
+          this.activeLayout = LayoutType.fullscreen;
+          break;
+        default:
+          this.activeLayout = LayoutType.default;
       }
-    })
+    }));
   }
 
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }
