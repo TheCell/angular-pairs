@@ -8,6 +8,7 @@ import { FullscreenLayoutComponent } from './fullscreen-layout/fullscreen-layout
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FooterComponent } from './footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -24,7 +25,8 @@ import { FooterComponent } from './footer/footer.component';
     CommonModule,
     TranslateModule,
     FontAwesomeModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   exports: [
     TranslateModule,
