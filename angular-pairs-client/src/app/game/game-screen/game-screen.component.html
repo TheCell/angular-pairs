@@ -1,27 +1,16 @@
-<div class="container  text-center mt-5 mb-5">
-  <h1>Bootstrap 5 is working fine with Angular 14!!</h1>
-</div>
 <p>game-screen works!</p>
-<div class="container">
 
-  <fa-icon [icon]="faCoffee"></fa-icon>
+<app-card
+  *ngFor="let card of cardService.playcards | async"
+  [imagePath]="card.imagePath">
+</app-card>
 
-  <button type="button" class="btn btn-primary" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-  Button with tooltip
-  </button>
 
-  <button type="button" class="btn btn-info">Create template modal</button>
-
-  <ng-template #template>
-      <div class="modal-header">
-          <h4 class="modal-title pull-left">Modal</h4>
-          <button type="button" class="close pull-right" aria-label="Close">
-       <span aria-hidden="true">&times;</span>
-     </button>
-      </div>
-      <div class="modal-body">
-          This is a modal.
-      </div>
-  </ng-template>
-
+<!-- {{rowCount}}
+<div class="row" *ngFor="let row of currentCards; let i = index">
+  {{ i }}
 </div>
+
+<ng-template>
+
+</ng-template> -->
