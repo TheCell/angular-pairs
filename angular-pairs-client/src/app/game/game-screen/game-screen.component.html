@@ -1,16 +1,8 @@
-<p>game-screen works!</p>
-
-<app-card
-  *ngFor="let card of cardService.playcards | async"
-  [imagePath]="card.imagePath">
-</app-card>
-
-
-<!-- {{rowCount}}
-<div class="row" *ngFor="let row of currentCards; let i = index">
-  {{ i }}
+<div class="d-flex flex-wrap justify-content-center">
+  <div *ngFor="let card of cardService.playcards | async" [style]="{ 'width': imageWidth + 'px', 'margin': 10 + 'px' }">
+    <app-card
+      [imageWidth]="imageWidth"
+      [imagePath]="card.imagePath">
+    </app-card>
+  </div>
 </div>
-
-<ng-template>
-
-</ng-template> -->

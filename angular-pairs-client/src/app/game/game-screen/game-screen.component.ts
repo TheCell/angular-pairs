@@ -11,6 +11,7 @@ import { CardService } from './card.service';
 export class GameScreenComponent implements OnInit {
   public faCoffee = faCoffee;
   public currentCards: Array<CardPair> = [];
+  public imageWidth: number = 200;
 
   public get rowCount(): number {
     return Math.ceil(this.currentCards.length / this.cardsPerRow);
