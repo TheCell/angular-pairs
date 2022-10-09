@@ -1,14 +1,14 @@
+import { CardsPerArtist } from './cards-per-artist';
 import { ReplaySubject } from 'rxjs';
 import { Cards } from './../../../assets/cards/cards';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CardPair } from './card-pair';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CardService {
-  public playcards = new ReplaySubject<Array<CardPair>>();
+  public playcards = new ReplaySubject<CardsPerArtist>();
 
   private allFiles: Array<string> = [];
 
@@ -21,13 +21,21 @@ export class CardService {
   }
 
   private updatePlayCards(): void {
-    const allCards:Array<CardPair> = [];
+    const allCards:CardsPerArtist = {};
+
     this.allFiles.forEach((filepath: string) => {
-      console.log(filepath);
-      allCards.push({
-        authorName: filepath,
-        imagePath: './assets/cards/' + filepath
-      })
+      const artist = filepath.split(' (')[0];
+      if (!allCards[artist]) {
+        allCards[artist] = [];
+      }
+
+      allCards[artist].push('./assets/cards/' + filepath);
+
+      // console.log(filepath);
+      // allCards.push({
+      //   authorName: filepath,
+      //   imagePath: './assets/cards/' + filepath
+      // })
     });
 
     this.playcards.next(allCards);

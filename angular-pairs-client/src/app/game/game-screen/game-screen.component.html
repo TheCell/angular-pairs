@@ -1,5 +1,5 @@
 <div class="d-flex flex-wrap justify-content-center">
-  <div *ngFor="let card of cardService.playcards | async" [style]="{ 'width': imageWidth + 'px', 'margin': 10 + 'px' }">
+  <div *ngFor="let card of currentCards" [style]="{ 'width': imageWidth + 'px', 'margin': 10 + 'px' }">
     <app-card
       [imageWidth]="imageWidth"
       [imagePath]="card.imagePath">
