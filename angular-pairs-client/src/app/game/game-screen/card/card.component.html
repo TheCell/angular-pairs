@@ -1,3 +1,9 @@
-<div class="card" [style]="{ 'width': imageWidth + 'px' }">
-  <img [src]="imagePath" class="card-img-top" alt="...">
+<div #card class="card" [style]="{ 'width': imageWidth + 'px' }" (click)="cardClicked()">
+  <div class="card__face card__front">
+    Front face of the card
+  </div>
+  <div class="card__face card__back">
+    <img [src]="imagePath" class="card-img-top" alt="...">
+    Back face of the card
+  </div>
 </div>

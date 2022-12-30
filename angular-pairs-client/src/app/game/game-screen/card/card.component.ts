@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CardComponent implements OnInit {
   @Input() public imagePath: string = '';
   @Input() public imageWidth?: number;
+  @ViewChild('card') public cardRef: ElementRef = {} as ElementRef;
 
   public constructor() { }
 
@@ -15,4 +16,9 @@ export class CardComponent implements OnInit {
     console.log('todo');
   }
 
+  public cardClicked(): void
+  {
+    console.log('clicked');
+    this.cardRef.nativeElement.classList.toggle('flipped');
+  }
 }
