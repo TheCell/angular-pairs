@@ -24,6 +24,7 @@ export class GameScreenComponent {
 
   private firstCardId = -1;
   private secondCardId = -1;
+  private solvedCardIndexes: Array<number> = [];
 
   public constructor(public cardService: CardService) {
     this.cardService.playcards.subscribe((cardsPerArtist: CardsPerArtist) => {
@@ -45,6 +46,10 @@ export class GameScreenComponent {
     this.isClickingEnabled.next(true);
   }
 
+  public wasSolved(index: number): boolean {
+    return this.solvedCardIndexes.indexOf(index) > -1;
+  }
+
   public cardClicked(id: number): void {
     if (this.firstCardId === -1) {
       this.firstCardId = id;
@@ -63,11 +68,15 @@ export class GameScreenComponent {
 
     if (this.areCardsMatching()) {
       this.isClickingEnabled.next(true);
-      this.firstCardId = -1;
-      this.secondCardId = -1;
+      timer(1000).subscribe(() => {
+        this.solvedCardIndexes.push(this.firstCardId);
+        this.solvedCardIndexes.push(this.secondCardId);
+        this.firstCardId = -1;
+        this.secondCardId = -1;
+      });
     } else {
-      timer(2000).subscribe(() => {
-        // allow the player to see the cards for about 2 seconds before turning them again
+      timer(1000).subscribe(() => {
+        // allow the player to see the cards before turning them again
         this.turnBackCard(this.firstCardId);
         this.turnBackCard(this.secondCardId);
         this.firstCardId = -1;

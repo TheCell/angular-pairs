@@ -10,6 +10,8 @@ export class CardComponent implements OnInit, OnDestroy {
   @Input() public imagePath: string = '';
   @Input() public imageWidth?: number;
   @Input() public id = 0;
+
+  @Input() public wasSolved: boolean = false;
   @Input() public hideCard?: Observable<number>;
   @Input() public isClickingAllowed?: Observable<boolean>;
   @Output() public cardClicked: EventEmitter<number> = new EventEmitter();
@@ -19,8 +21,7 @@ export class CardComponent implements OnInit, OnDestroy {
   private isClickable = true;
   private isFlipped = false;
 
-  public constructor() {
-  }
+  public constructor() { }
 
   public ngOnInit(): void {
     this.subscription.add(this.hideCard?.subscribe((id: number) => {
