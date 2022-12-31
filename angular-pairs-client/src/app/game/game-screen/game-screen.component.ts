@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { ReplaySubject, timer } from 'rxjs';
 import { CardPair } from './card-pair';
 import { CardService } from './card.service';
 import { CardsPerArtist } from './cards-per-artist';
@@ -14,10 +15,15 @@ export class GameScreenComponent {
   public currentCards: Array<CardPair> = [];
   public imageWidth: number = 200;
   public cardsPerRow = 3;
+  public cardsToTurnBack: EventEmitter<number> = new EventEmitter();
+  public isClickingEnabled: ReplaySubject<boolean> = new ReplaySubject(1);
 
   public get rowCount(): number {
     return Math.ceil(this.currentCards.length / this.cardsPerRow);
   }
+
+  private firstCardId = -1;
+  private secondCardId = -1;
 
   public constructor(public cardService: CardService) {
     this.cardService.playcards.subscribe((cardsPerArtist: CardsPerArtist) => {
@@ -35,6 +41,44 @@ export class GameScreenComponent {
 
       this.shuffleArray(this.currentCards);
     });
+
+    this.isClickingEnabled.next(true);
+  }
+
+  public cardClicked(id: number): void {
+    if (this.firstCardId === -1) {
+      this.firstCardId = id;
+    } else {
+      this.secondCardId = id;
+      this.checkForMatch();
+    }
+  }
+
+  public turnBackCard(id: number): void {
+    this.cardsToTurnBack.next(id);
+  }
+
+  private checkForMatch(): void {
+    this.isClickingEnabled.next(false);
+
+    if (this.areCardsMatching()) {
+      this.isClickingEnabled.next(true);
+      this.firstCardId = -1;
+      this.secondCardId = -1;
+    } else {
+      timer(2000).subscribe(() => {
+        // allow the player to see the cards for about 2 seconds before turning them again
+        this.turnBackCard(this.firstCardId);
+        this.turnBackCard(this.secondCardId);
+        this.firstCardId = -1;
+        this.secondCardId = -1;
+        this.isClickingEnabled.next(true);
+      });
+    }
+  }
+
+  private areCardsMatching(): boolean {
+    return this.currentCards[this.firstCardId].authorName === this.currentCards[this.secondCardId].authorName;
   }
 
   private getCard(artist: string, imagePath: string) : CardPair {
