@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { CoreModule } from './../core/core.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -7,7 +8,8 @@ import { CardComponent } from './game-screen/card/card.component';
 @NgModule({
   imports: [
     CoreModule,
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   declarations: [
     GameScreenComponent,
