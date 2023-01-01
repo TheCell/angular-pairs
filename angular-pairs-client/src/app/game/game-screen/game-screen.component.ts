@@ -35,7 +35,11 @@ export class GameScreenComponent {
     private modalService: NgbModal,
     private router: Router) {
     this.cardService.playcards.subscribe((cardsPerArtist: CardsPerArtist) => {
-      for (const key in cardsPerArtist) {
+      let keys = Object.keys(cardsPerArtist);
+      this.shuffleArray(keys);
+      keys = keys.slice(0, 10);
+
+      for (const key of keys) {
         const images = cardsPerArtist[key];
         this.shuffleArray(images);
         const entry1 = images.pop();
