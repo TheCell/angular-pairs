@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, EventEmitter } from '@angular/core';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -27,10 +28,12 @@ export class GameScreenComponent {
   private firstCardId = -1;
   private secondCardId = -1;
   private solvedCardIndexes: Array<number> = [];
+  private attempts = 0;
 
   public constructor(
     public cardService: CardService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    private router: Router) {
     this.cardService.playcards.subscribe((cardsPerArtist: CardsPerArtist) => {
       for (const key in cardsPerArtist) {
         const images = cardsPerArtist[key];
@@ -48,12 +51,6 @@ export class GameScreenComponent {
     });
 
     this.isClickingEnabled.next(true);
-  }
-
-  public openVideoPopup() {
-    // const modalRef = this.modalService.open(ModalComponent);
-    // modalRef.componentInstance.src = link;
-    this.modalService.open(ModalComponent);
   }
 
   public wasSolved(index: number): boolean {
@@ -77,14 +74,18 @@ export class GameScreenComponent {
     this.isClickingEnabled.next(false);
 
     if (this.areCardsMatching()) {
-      this.isClickingEnabled.next(true);
       timer(1000).subscribe(() => {
         this.solvedCardIndexes.push(this.firstCardId);
         this.solvedCardIndexes.push(this.secondCardId);
         this.firstCardId = -1;
         this.secondCardId = -1;
+        this.isClickingEnabled.next(true);
+        if (this.isGameFinished()) {
+          this.openPopup();
+        }
       });
     } else {
+      this.attempts ++;
       timer(1000).subscribe(() => {
         // allow the player to see the cards before turning them again
         this.turnBackCard(this.firstCardId);
@@ -94,6 +95,19 @@ export class GameScreenComponent {
         this.isClickingEnabled.next(true);
       });
     }
+  }
+
+  private openPopup() {
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.title = 'Finished';
+    modalRef.componentInstance.message = `You solved the game of pairs. You had to retry only ${ this.attempts } ${ this.attempts === 1 ? 'time' : 'times'}.`;
+    modalRef.closed.subscribe(() => {
+      this.router.navigate(['/']);
+    });
+  }
+
+  private isGameFinished(): boolean {
+    return this.solvedCardIndexes.length === this.currentCards.length;
   }
 
   private areCardsMatching(): boolean {
