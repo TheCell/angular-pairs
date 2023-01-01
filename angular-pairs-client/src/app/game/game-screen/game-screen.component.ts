@@ -36,12 +36,12 @@ export class GameScreenComponent {
     private router: Router) {
     this.cardService.playcards.subscribe((cardsPerArtist: CardsPerArtist) => {
       let keys = Object.keys(cardsPerArtist);
-      this.shuffleArray(keys);
+      this.shuffle(keys);
       keys = keys.slice(0, 10);
 
       for (const key of keys) {
         const images = cardsPerArtist[key];
-        this.shuffleArray(images);
+        this.shuffle(images);
         const entry1 = images.pop();
         const entry2 = images.pop();
 
@@ -51,7 +51,7 @@ export class GameScreenComponent {
         }
       }
 
-      this.shuffleArray(this.currentCards);
+      this.shuffle(this.currentCards);
     });
 
     this.isClickingEnabled.next(true);
@@ -78,7 +78,7 @@ export class GameScreenComponent {
     this.isClickingEnabled.next(false);
 
     if (this.areCardsMatching()) {
-      timer(1000).subscribe(() => {
+      timer(600).subscribe(() => {
         this.solvedCardIndexes.push(this.firstCardId);
         this.solvedCardIndexes.push(this.secondCardId);
         this.firstCardId = -1;
@@ -125,7 +125,10 @@ export class GameScreenComponent {
     }
   }
 
-  private shuffleArray(arr: Array<string | CardPair>): void {
-    arr.sort(() => Math.random() - 0.5); // maybe make it fixed per day?
+  private shuffle(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
   }
 }
