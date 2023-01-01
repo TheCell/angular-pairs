@@ -1,6 +1,8 @@
 import { Component, EventEmitter } from '@angular/core';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReplaySubject, timer } from 'rxjs';
+import { ModalComponent } from 'src/app/shared/modal/modal.component';
 import { CardPair } from './card-pair';
 import { CardService } from './card.service';
 import { CardsPerArtist } from './cards-per-artist';
@@ -26,7 +28,9 @@ export class GameScreenComponent {
   private secondCardId = -1;
   private solvedCardIndexes: Array<number> = [];
 
-  public constructor(public cardService: CardService) {
+  public constructor(
+    public cardService: CardService,
+    private modalService: NgbModal) {
     this.cardService.playcards.subscribe((cardsPerArtist: CardsPerArtist) => {
       for (const key in cardsPerArtist) {
         const images = cardsPerArtist[key];
@@ -44,6 +48,12 @@ export class GameScreenComponent {
     });
 
     this.isClickingEnabled.next(true);
+  }
+
+  public openVideoPopup() {
+    // const modalRef = this.modalService.open(ModalComponent);
+    // modalRef.componentInstance.src = link;
+    this.modalService.open(ModalComponent);
   }
 
   public wasSolved(index: number): boolean {
