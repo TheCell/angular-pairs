@@ -1,25 +1,30 @@
 import { Router } from '@angular/router';
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnDestroy } from '@angular/core';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ReplaySubject, timer } from 'rxjs';
+import { ReplaySubject, Subscription, timer } from 'rxjs';
 import { ModalComponent } from 'src/app/shared/modal/modal.component';
 import { CardPair } from './card-pair';
 import { CardService } from './card.service';
 import { CardsPerArtist } from './cards-per-artist';
+import { GameEvent } from './game-event.enum';
 
 @Component({
   selector: 'app-game-screen',
   templateUrl: './game-screen.component.html',
   styleUrls: ['./game-screen.component.scss']
 })
-export class GameScreenComponent {
+export class GameScreenComponent implements OnDestroy {
   public faCoffee = faCoffee;
   public currentCards: Array<CardPair> = [];
   public imageWidth: number = 200;
   public cardsPerRow = 3;
+  public attempts = 0;
+  public clicks = 0;
+  public matches = 0;
   public cardsToTurnBack: EventEmitter<number> = new EventEmitter();
   public isClickingEnabled: ReplaySubject<boolean> = new ReplaySubject(1);
+  public gameEvent: EventEmitter<GameEvent> = new EventEmitter();
 
   public get rowCount(): number {
     return Math.ceil(this.currentCards.length / this.cardsPerRow);
@@ -28,7 +33,7 @@ export class GameScreenComponent {
   private firstCardId = -1;
   private secondCardId = -1;
   private solvedCardIndexes: Array<number> = [];
-  private attempts = 0;
+  private subscription = new Subscription();
 
   public constructor(
     public cardService: CardService,
@@ -55,6 +60,27 @@ export class GameScreenComponent {
     });
 
     this.isClickingEnabled.next(true);
+    this.subscription.add(this.gameEvent.subscribe((event: GameEvent) => {
+      switch (event)
+      {
+        case GameEvent.CardTurn:
+          this.clicks ++;
+        break;
+        case GameEvent.Match:
+          this.matches ++;
+        break;
+        case GameEvent.Missmatch:
+          this.attempts ++;
+        break;
+        case GameEvent.Won:
+          this.openPopup();
+        break;
+      }
+    }))
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public wasSolved(index: number): boolean {
@@ -62,6 +88,7 @@ export class GameScreenComponent {
   }
 
   public cardClicked(id: number): void {
+    this.gameEvent.next(GameEvent.CardTurn);
     if (this.firstCardId === -1) {
       this.firstCardId = id;
     } else {
@@ -84,18 +111,21 @@ export class GameScreenComponent {
         this.firstCardId = -1;
         this.secondCardId = -1;
         this.isClickingEnabled.next(true);
+        this.gameEvent.next(GameEvent.Match);
+
         if (this.isGameFinished()) {
-          this.openPopup();
+          this.gameEvent.next(GameEvent.Won);
         }
       });
     } else {
-      this.attempts ++;
       timer(1000).subscribe(() => {
         // allow the player to see the cards before turning them again
         this.turnBackCard(this.firstCardId);
         this.turnBackCard(this.secondCardId);
         this.firstCardId = -1;
         this.secondCardId = -1;
+        this.gameEvent.next(GameEvent.Missmatch);
+
         this.isClickingEnabled.next(true);
       });
     }
