@@ -1,25 +1,6 @@
-<div class="row">
-  <div class="col"></div>
-  <div class="col col-4">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col text-center">Clicks</th>
-          <th scope="col text-center">Missmatches</th>
-          <th scope="col text-center">Matches</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="text-center">{{ clicks }}</td>
-          <td class="text-center">{{ attempts }}</td>
-          <td class="text-center">{{ matches }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="col"></div>
-</div>
+<app-game-stats [statsToDisplay]="currentStats" [saveGame]="gameWonEvent">
+</app-game-stats>
+
 <div class="d-flex flex-wrap justify-content-center">
   <div *ngFor="let card of currentCards; index as i" [style]="{ 'width': imageWidth + 'px', 'margin': 10 + 'px' }">
     <app-card

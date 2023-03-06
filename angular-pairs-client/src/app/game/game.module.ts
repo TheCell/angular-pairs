@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameScreenComponent } from './game-screen/game-screen.component';
 import { CardComponent } from './game-screen/card/card.component';
+import { GameStatsComponent } from './game-screen/game-stats/game-stats.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { CardComponent } from './game-screen/card/card.component';
   ],
   declarations: [
     GameScreenComponent,
-    CardComponent
+    CardComponent,
+    GameStatsComponent
   ],
   exports: [
     GameScreenComponent

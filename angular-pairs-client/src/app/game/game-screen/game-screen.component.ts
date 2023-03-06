@@ -2,12 +2,13 @@ import { Router } from '@angular/router';
 import { Component, EventEmitter, OnDestroy } from '@angular/core';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ReplaySubject, Subscription, timer } from 'rxjs';
+import { ReplaySubject, Subject, Subscription, timer } from 'rxjs';
 import { ModalComponent } from 'src/app/shared/modal/modal.component';
 import { CardPair } from './card-pair';
 import { CardService } from './card.service';
 import { CardsPerArtist } from './cards-per-artist';
 import { GameEvent } from './game-event.enum';
+import { CurrentData } from './game-stats/current-data';
 
 @Component({
   selector: 'app-game-screen',
@@ -25,6 +26,11 @@ export class GameScreenComponent implements OnDestroy {
   public cardsToTurnBack: EventEmitter<number> = new EventEmitter();
   public isClickingEnabled: ReplaySubject<boolean> = new ReplaySubject(1);
   public gameEvent: EventEmitter<GameEvent> = new EventEmitter();
+  public gameWonEvent = new Subject<CurrentData>();
+
+  public get currentStats(): CurrentData {
+    return this.getCurrentData();
+  }
 
   public get rowCount(): number {
     return Math.ceil(this.currentCards.length / this.cardsPerRow);
@@ -73,6 +79,7 @@ export class GameScreenComponent implements OnDestroy {
           this.attempts ++;
         break;
         case GameEvent.Won:
+          this.gameWonEvent.next(this.getCurrentData());
           this.openPopup();
         break;
       }
@@ -159,6 +166,14 @@ export class GameScreenComponent implements OnDestroy {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  private getCurrentData(): CurrentData {
+    return {
+      attempts: this.attempts,
+      clicks: this.clicks,
+      matches: this.matches
     }
   }
 }
