@@ -22,8 +22,9 @@ export class GameStatsComponent implements OnInit, OnDestroy {
   private savingString = 'last-game-stats';
 
   public constructor(private cookieService: CookieService) {
+    console.log(document.cookie);
+    console.log(localStorage);
     console.log(sessionStorage);
-
   }
 
   public ngOnInit(): void {
@@ -49,15 +50,15 @@ export class GameStatsComponent implements OnInit, OnDestroy {
   }
 
   private loadStats(): void {
-    console.log(document.cookie);
+    // 'last-game-stats'
     const cookieExample = this.cookieService.get(this.savingString);
-    console.log(cookieExample);
+    console.log(`Cookie: for ${this.savingString}`, cookieExample);
 
     const sessionExample = sessionStorage.getItem(this.savingString);
-    console.log(sessionExample);
+    console.log(`SessionStorage: for ${this.savingString}`, sessionExample);
 
     const localExample = localStorage.getItem(this.savingString);
-    console.log(localExample);
+    console.log(`LocalStorage: for ${this.savingString}`, localExample);
 
     if (localStorage.getItem(this.savingString))
     {
