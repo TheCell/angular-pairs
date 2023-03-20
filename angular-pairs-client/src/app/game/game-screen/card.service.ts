@@ -30,12 +30,6 @@ export class CardService {
       }
 
       allCards[artist].push('./assets/cards/' + filepath);
-
-      // console.log(filepath);
-      // allCards.push({
-      //   authorName: filepath,
-      //   imagePath: './assets/cards/' + filepath
-      // })
     });
 
     this.playcards.next(allCards);

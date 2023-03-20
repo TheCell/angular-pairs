@@ -1,6 +1,7 @@
 # AngularPairsClient
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
+Generating for production: `ng build --base-href https://dev.thecell.eu/memory/ --configuration=production`
 
 ## Development server
 
