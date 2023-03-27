@@ -1,3 +1,4 @@
+import { GameModule } from './game/game.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { NgModule } from '@angular/core';
@@ -5,7 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GameScreenComponent } from './game-screen/game-screen.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ConstantsService } from './core/constants.service';
 import { AboutComponent } from './about/about.component';
@@ -14,13 +14,13 @@ import { HomeComponent } from './home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
-    GameScreenComponent,
     AboutComponent,
     HomeComponent
   ],
   imports: [
     BrowserModule,
     CoreModule.forRoot(),
+    GameModule,
     AppRoutingModule,
     SharedModule
   ],

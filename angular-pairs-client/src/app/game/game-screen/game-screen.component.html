@@ -1,0 +1,19 @@
+<app-game-stats
+  [statsToDisplay]="currentStats"
+  [saveGame]="gameWonEvent"
+  (hardmodeEnabled)="switchDifficulty($event)">
+</app-game-stats>
+
+<div class="d-flex flex-wrap justify-content-center">
+  <div *ngFor="let card of currentCards; index as i" [style]="{ 'width': imageWidth + 'px', 'margin': 10 + 'px' }">
+    <app-card
+      [wasSolved]="wasSolved(i)"
+      [imageWidth]="imageWidth"
+      [imagePath]="card.imagePath"
+      [id]="i"
+      [isClickingAllowed]="isClickingEnabled"
+      [hideCard]="cardsToTurnBack"
+      (cardClicked)="cardClicked($event)">
+    </app-card>
+  </div>
+</div>

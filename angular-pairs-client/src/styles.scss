@@ -14,11 +14,7 @@ $accentColor: #fd5a32;
   --bs-body-bg: #{$baseColor};
 }
 
-// .secondary {
-//   background-color: $secondaryColor;
-// }
-
-// html {
-//   background-color: $baseColor;
-//   color: $fontColor;
-// }
+.solved {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}

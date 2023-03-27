@@ -8,6 +8,8 @@ import { FullscreenLayoutComponent } from './fullscreen-layout/fullscreen-layout
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FooterComponent } from './footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -24,13 +26,19 @@ import { FooterComponent } from './footer/footer.component';
     CommonModule,
     TranslateModule,
     FontAwesomeModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   exports: [
     TranslateModule,
     FontAwesomeModule,
     LayoutComponent,
-    FullscreenLayoutComponent
+    FullscreenLayoutComponent,
+    ReactiveFormsModule
+  ],
+  providers: [
+    FormBuilder
   ]
 })
 export class CoreModule {

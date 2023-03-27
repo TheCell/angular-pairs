@@ -1,5 +1,5 @@
 import { HomeComponent } from './home/home.component';
-import { GameScreenComponent } from './game-screen/game-screen.component';
+import { GameScreenComponent } from './game/game-screen/game-screen.component';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
 import { NgModule } from '@angular/core';
