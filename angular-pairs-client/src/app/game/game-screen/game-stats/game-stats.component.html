@@ -1,44 +1,46 @@
-<div class="row">
-<div class="col"></div>
-<div class="col">
-    <table class="table table-hover">
-    <thead>
+<div class="container">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col">
+      <table class="table table-hover">
+      <thead>
+          <tr>
+            <th scope="col text-center"></th>
+            <th scope="col text-center">Clicks</th>
+            <th scope="col text-center">Missmatches</th>
+            <th scope="col text-center">Matches</th>
+            <th scope="col text-center">HardMode</th>
+            <th scope="col text-center">Action</th>
+          </tr>
+      </thead>
+      <tbody>
         <tr>
-          <th scope="col text-center"></th>
-          <th scope="col text-center">Clicks</th>
-          <th scope="col text-center">Missmatches</th>
-          <th scope="col text-center">Matches</th>
-          <th scope="col text-center">HardMode</th>
-          <th scope="col text-center">Action</th>
+          <td class="text-center">current game</td>
+          <td class="text-center">{{ statsToDisplay.clicks }}</td>
+          <td class="text-center">{{ statsToDisplay.attempts }}</td>
+          <td class="text-center">{{ statsToDisplay.matches }}</td>
+          <td class="text-center">{{ statsToDisplay.useHardMode }}</td>
+          <td class="text-center"></td>
         </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="text-center">current game</td>
-        <td class="text-center">{{ statsToDisplay.clicks }}</td>
-        <td class="text-center">{{ statsToDisplay.attempts }}</td>
-        <td class="text-center">{{ statsToDisplay.matches }}</td>
-        <td class="text-center">{{ statsToDisplay.useHardMode }}</td>
-        <td class="text-center"></td>
-      </tr>
-      <tr *ngIf="lastGame">
-        <td class="text-center">last game</td>
-        <td class="text-center">{{ lastGame.clicks }}</td>
-        <td class="text-center">{{ lastGame.attempts }}</td>
-        <td class="text-center">{{ lastGame.matches }}</td>
-        <td class="text-center">{{ lastGame.useHardMode }}</td>
-        <td class="text-center">
-          <button (click)="deleteStorage()" type="button" class="btn btn-secondary">Delete Storage</button>
-        </td>
-      </tr>
-    </tbody>
-    </table>
-</div>
-<div class="col" [formGroup]="form">
-  <div class="form-check form-switch" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hard means: Not the same picture, just the 'artist'.">
-    <input class="form-check-input" type="checkbox" formControlName="hardModeEnabled" id="hardModeSwitch">
-    <label class="form-check-label" for="hardModeSwitch">Hard Mode</label>
+        <tr *ngIf="lastGame">
+          <td class="text-center">last game</td>
+          <td class="text-center">{{ lastGame.clicks }}</td>
+          <td class="text-center">{{ lastGame.attempts }}</td>
+          <td class="text-center">{{ lastGame.matches }}</td>
+          <td class="text-center">{{ lastGame.useHardMode }}</td>
+          <td class="text-center">
+            <button (click)="deleteStorage()" type="button" class="btn btn-secondary">Delete Storage</button>
+          </td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
+    <div class="col" [formGroup]="form">
+      <div class="form-check form-switch" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hard means: Not the same picture, just the 'artist'.">
+        <input class="form-check-input" type="checkbox" formControlName="hardModeEnabled" id="hardModeSwitch">
+        <label class="form-check-label" for="hardModeSwitch">Hard Mode</label>
+      </div>
+    </div>
+    <div class="col"></div>
   </div>
-</div>
-<div class="col"></div>
 </div>

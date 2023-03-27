@@ -27,3 +27,9 @@
     transform: rotateY(0deg);
   }
 }
+
+.solved {
+  transition: filter 0.6s;
+  filter: contrast(60%) blur(3px);
+  -webkit-filter: contrast(60%) blur(3px);
+}
