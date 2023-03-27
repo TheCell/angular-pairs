@@ -25,7 +25,6 @@ export class GameScreenComponent implements OnDestroy {
   public matches = 0;
   public cardsToTurnBack: EventEmitter<number> = new EventEmitter();
   public isClickingEnabled: ReplaySubject<boolean> = new ReplaySubject(1);
-  public gameEvent: EventEmitter<GameEvent> = new EventEmitter();
   public gameWonEvent = new Subject<CurrentData>();
 
   public get currentStats(): CurrentData {
@@ -40,29 +39,15 @@ export class GameScreenComponent implements OnDestroy {
   private secondCardId = -1;
   private solvedCardIndexes: Array<number> = [];
   private subscription = new Subscription();
+  private useHardMode = false;
+  private gameEvent: EventEmitter<GameEvent> = new EventEmitter();
 
   public constructor(
     public cardService: CardService,
     private modalService: NgbModal,
     private router: Router) {
     this.cardService.playcards.subscribe((cardsPerArtist: CardsPerArtist) => {
-      let keys = Object.keys(cardsPerArtist);
-      this.shuffle(keys);
-      keys = keys.slice(0, 10);
-
-      for (const key of keys) {
-        const images = cardsPerArtist[key];
-        this.shuffle(images);
-        const entry1 = images.pop();
-        const entry2 = images.pop();
-
-        if (entry1 && entry2) {
-          this.currentCards.push(this.getCard(key, entry1));
-          this.currentCards.push(this.getCard(key, entry2));
-        }
-      }
-
-      this.shuffle(this.currentCards);
+      this.prepareCards(cardsPerArtist);
     });
 
     this.isClickingEnabled.next(true);
@@ -106,6 +91,14 @@ export class GameScreenComponent implements OnDestroy {
 
   public turnBackCard(id: number): void {
     this.cardsToTurnBack.next(id);
+  }
+
+  public switchDifficulty(isHardmode: boolean) {
+    this.useHardMode = isHardmode;
+
+    this.cardService.playcards.subscribe((cardsPerArtist: CardsPerArtist) => {
+      this.prepareCards(cardsPerArtist);
+    });
   }
 
   private checkForMatch(): void {
@@ -164,7 +157,7 @@ export class GameScreenComponent implements OnDestroy {
 
   private shuffle(array: any[]) {
     for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const j = Math.floor(Math.random() * (array.length - 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
   }
@@ -173,7 +166,43 @@ export class GameScreenComponent implements OnDestroy {
     return {
       attempts: this.attempts,
       clicks: this.clicks,
-      matches: this.matches
+      matches: this.matches,
+      useHardMode: this.useHardMode
     }
+  }
+
+  private prepareCards(cardsPerArtist: CardsPerArtist): void {
+    this.currentCards = [];
+    this.solvedCardIndexes = [];
+    this.attempts = 0;
+    this.clicks = 0;
+    this.matches = 0;
+    this.firstCardId = -1;
+    this.secondCardId = -1;
+
+    let keys = Object.keys(cardsPerArtist);
+    this.shuffle(keys);
+    keys = keys.slice(0, 10);
+
+    for (const key of keys) {
+      const images = [...cardsPerArtist[key]];
+      // const images = cardsPerArtist[key];
+      this.shuffle(images);
+
+      const entry1 = images.pop();
+      const entry2 = images.pop();
+
+      if (entry1 && entry2) {
+        this.currentCards.push(this.getCard(key, entry1));
+
+        if (this.useHardMode) {
+          this.currentCards.push(this.getCard(key, entry2));
+        } else {
+          this.currentCards.push(this.getCard(key, entry1));
+        }
+      }
+    }
+
+    this.shuffle(this.currentCards);
   }
 }

@@ -1,6 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, ReplaySubject, Subscription } from 'rxjs';
 import { CurrentData } from './current-data';
 
 @Component({
@@ -12,19 +13,29 @@ export class GameStatsComponent implements OnInit, OnDestroy {
   @Input() public statsToDisplay: CurrentData = {
     attempts: 0,
     clicks: 0,
-    matches: 0
+    matches: 0,
+    useHardMode: false
   };
   @Input() public saveGame: Observable<CurrentData> | null = null;
+  @Output() public hardmodeEnabled: ReplaySubject<boolean> = new ReplaySubject();
 
   public lastGame: CurrentData | null = null;
+  public form: FormGroup;
 
   private subscription = new Subscription();
   private savingString = 'last-game-stats';
 
-  public constructor(private cookieService: CookieService) {
+  public constructor(
+    private cookieService: CookieService,
+    formBuilder: FormBuilder) {
     console.log(document.cookie);
     console.log(localStorage);
     console.log(sessionStorage);
+
+    this.form = formBuilder.group({
+      hardModeEnabled: [false]
+    });
+    this.subscribeToForm();
   }
 
   public ngOnInit(): void {
@@ -64,8 +75,9 @@ export class GameStatsComponent implements OnInit, OnDestroy {
     {
       const savedString = localStorage.getItem(this.savingString);
       if (savedString) {
-        const lastGame = JSON.parse(savedString);
+        const lastGame: CurrentData = JSON.parse(savedString);
         this.lastGame = lastGame;
+        this.form.patchValue({ hardModeEnabled: lastGame.useHardMode });
       }
     } else {
       this.lastGame = null;
@@ -76,5 +88,11 @@ export class GameStatsComponent implements OnInit, OnDestroy {
     localStorage.setItem(this.savingString, JSON.stringify(data));
     sessionStorage.setItem(this.savingString, JSON.stringify(data));
     this.cookieService.set(this.savingString, JSON.stringify(data));
+  }
+
+  private subscribeToForm(): void {
+    this.subscription.add(this.form.get('hardModeEnabled')?.valueChanges.subscribe((newValue: boolean) => {
+      this.hardmodeEnabled.next(newValue);
+    }));
   }
 }

@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -26,13 +27,18 @@ import { HttpClientModule } from '@angular/common/http';
     TranslateModule,
     FontAwesomeModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   exports: [
     TranslateModule,
     FontAwesomeModule,
     LayoutComponent,
-    FullscreenLayoutComponent
+    FullscreenLayoutComponent,
+    ReactiveFormsModule
+  ],
+  providers: [
+    FormBuilder
   ]
 })
 export class CoreModule {

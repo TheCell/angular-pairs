@@ -1,4 +1,7 @@
-<app-game-stats [statsToDisplay]="currentStats" [saveGame]="gameWonEvent">
+<app-game-stats
+  [statsToDisplay]="currentStats"
+  [saveGame]="gameWonEvent"
+  (hardmodeEnabled)="switchDifficulty($event)">
 </app-game-stats>
 
 <div class="d-flex flex-wrap justify-content-center">
