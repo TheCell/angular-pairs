@@ -1,5 +1,6 @@
 export enum NavigationRoute {
   home,
   game,
-  about
+  about,
+  proEscape
 }

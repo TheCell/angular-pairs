@@ -1,0 +1,20 @@
+<div class="grid-container">
+  <div class="grid-area-avatar">
+    <app-avatar-frame></app-avatar-frame>
+  </div>
+  <div class="grid-area-key">
+    <app-tracked-keys></app-tracked-keys>
+  </div>
+  <div class="grid-code-entry">
+    <app-code-entry
+      (nextGame)="onNextGame()"></app-code-entry>
+  </div>
+  <div class="grid-area-chat">
+    <app-chat-frame></app-chat-frame>
+  </div>
+  <div class="grid-area-game">
+    <app-game-frame
+      class="width: 100%; height: 100%;"
+      [showGameNr]="currentGame"></app-game-frame>
+  </div>
+</div>

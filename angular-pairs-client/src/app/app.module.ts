@@ -10,12 +10,28 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConstantsService } from './core/constants.service';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
+import { ProEscapeTestingComponent } from './pro-escape-testing/pro-escape-testing.component';
+import { AvatarFrameComponent } from './pro-escape-testing/avatar-frame/avatar-frame.component';
+import { TrackedKeysComponent } from './pro-escape-testing/tracked-keys/tracked-keys.component';
+import { ChatFrameComponent } from './pro-escape-testing/chat-frame/chat-frame.component';
+import { GameFrameComponent } from './pro-escape-testing/game-frame/game-frame.component';
+import { EscapeGameOneComponent } from './pro-escape-testing/escape-games/escape-game-one/escape-game-one.component';
+import { EscapeGameTwoComponent } from './pro-escape-testing/escape-games/escape-game-two/escape-game-two.component';
+import { CodeEntryComponent } from './pro-escape-testing/code-entry/code-entry.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
-    HomeComponent
+    HomeComponent,
+    ProEscapeTestingComponent,
+    AvatarFrameComponent,
+    TrackedKeysComponent,
+    ChatFrameComponent,
+    GameFrameComponent,
+    EscapeGameOneComponent,
+    EscapeGameTwoComponent,
+    CodeEntryComponent
   ],
   imports: [
     BrowserModule,

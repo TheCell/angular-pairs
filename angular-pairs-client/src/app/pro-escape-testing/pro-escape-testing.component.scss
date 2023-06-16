@@ -1,0 +1,42 @@
+.grid-container {
+  height: calc(100vh - 2 * 56px);
+  display: grid;
+  grid-template-columns: 20vw 20vw 20vw 20vw 20vw;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "avatar avatar key key key"
+    "avatar avatar game game game"
+    "code code game game game"
+    "chat chat game game game"
+    "chat chat game game game";
+}
+
+.grid-area-avatar {
+  background-color: #118ab2;
+  grid-area: avatar;
+  justify-self: stretch;
+}
+
+.grid-area-key {
+  background-color: #06d6a0;
+  grid-area: key;
+  justify-self: stretch;
+}
+
+.grid-code-entry {
+  background-color: #073b4c;
+  grid-area: code;
+  justify-self: stretch;
+}
+
+.grid-area-chat {
+  background-color: #ef476f;
+  grid-area: chat;
+  justify-self: stretch;
+}
+
+.grid-area-game {
+  background-color: #ffd166;
+  grid-area: game;
+  justify-self: stretch;
+}

@@ -1,3 +1,4 @@
+import { ProEscapeTestingComponent } from './pro-escape-testing/pro-escape-testing.component';
 import { HomeComponent } from './home/home.component';
 import { GameScreenComponent } from './game/game-screen/game-screen.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -9,6 +10,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'game', component: GameScreenComponent },
   { path: '', pathMatch: 'full', component: HomeComponent },
+  { path: 'pro-escape', pathMatch: 'full', component: ProEscapeTestingComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
