@@ -13,8 +13,3 @@ $accentColor: #fd5a32;
   --bs-body-color: #{$fontColor};
   --bs-body-bg: #{$baseColor};
 }
-
-.solved {
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
-}
